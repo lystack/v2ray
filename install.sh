@@ -913,7 +913,11 @@ show_config_info() {
 	_v2_args
 	_v2_info
 	_load ss-info.sh
+}
 
+default_config() {
+	v2ray_transport=1
+	v2ray_port=8443
 }
 
 install() {
@@ -932,9 +936,10 @@ install() {
 		echo
 		exit 1
 	fi
-	v2ray_config
-	blocked_hosts
-	shadowsocks_config
+	# v2ray_config
+	# blocked_hosts
+	# shadowsocks_config
+	default_config
 	install_info
 	# [[ $caddy ]] && domain_check
 	install_v2ray
@@ -983,6 +988,12 @@ uninstall() {
 
 }
 
+firewall_allow_port() {
+	echo "防火墙开放端口"
+	firewall-cmd --zone=public --add-port=${v2ray_port}/tcp --permanent
+	firewall-cmd --reload
+}
+
 args=$1
 _gitbranch=$2
 [ -z $1 ] && args="online"
@@ -1009,34 +1020,5 @@ local)
 esac
 
 clear
-while :; do
-	echo
-	echo "........... V2Ray 一键安装脚本 & 管理脚本 by 233v2.com .........."
-	echo
-	echo "帮助说明: https://233v2.com/post/1/"
-	echo
-	echo "搭建教程: https://233v2.com/post/2/"
-	echo
-	echo " 1. 安装"
-	echo
-	echo " 2. 卸载"
-	echo
-	if [[ $local_install ]]; then
-		echo -e "$yellow 温馨提示.. 本地安装已启用 ..$none"
-		echo
-	fi
-	read -p "$(echo -e "请选择 [${magenta}1-2$none]:")" choose
-	case $choose in
-	1)
-		install
-		break
-		;;
-	2)
-		uninstall
-		break
-		;;
-	*)
-		error
-		;;
-	esac
-done
+install
+firewall_allow_port
