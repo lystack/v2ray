@@ -731,7 +731,7 @@ install_info() {
 	echo
 	echo "---------- END -------------"
 	echo
-	pause
+	# pause
 	echo
 }
 
