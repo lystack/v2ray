@@ -1,3 +1,6 @@
+# 自定义安装v2ray
+`bash <(curl -s -L https://git.io/myray.sh)`
+
 # v2ray
 最好用的 V2Ray 一键安装脚本 &amp; 管理脚本
 
@@ -12,3 +15,4 @@
 
 ## 更多 V2Ray 教程文章
 https://github.com/233boy/v2ray/wiki
+
